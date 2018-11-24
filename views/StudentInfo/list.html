@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>登陆教学管理系统</title>
+    <!--[if lt IE 8]>
+    <script type="text/javascript" src="../../public/bootstrap/html5shiv.min.js"></script>
+    <script type="text/javascript" src="../../public/bootstrap/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../../public/bootstrap/css/bootstrap.min.css" type="text/css">
+    <script src="../../public/bootstrap/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../public/layer/layer.js" type="text/javascript"></script>
+    <script src="../../public/javascripts/common.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="page-header" style="margin-top: 15px;">
+            <h4 class="text-center text-primary">班级信息列表</h4>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="" class="form-inline" role="form">
+                    <div class="form-group">
+                        <label for="" class="control-label">姓名</label>
+                        <input type="text" class="form-control" name="s_name" id="s_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">性别</label>
+                        <select name="s_sex" id="s_sex"  class="form-control">
+                            <option value="">-请选择-</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span>
+                            查询
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="btn-group" style="margin: 5px 0px">
+            <button type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                新增
+            </button>
+            <button type="button" class="btn btn-warning">
+                <span class="glyphicon glyphicon-edit"></span>
+                修改
+            </button>
+            <button type="button" class="btn btn-danger btn-deleteAll">
+                <span class="glyphicon glyphicon-trash"></span>
+                删除
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <tr>
+                    <td><input type="checkbox" id="ckAll">全选</td>
+                    <td>学号</td>
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>生日</td>
+                    <td>民族</td>
+                    <td>班级</td>
+                    <td>地址</td>
+                    <td>操作</td>
+                </tr>
+                <%stuList.forEach((item)=>{%>
+                    <tr>
+                        <td><input name="ck" type="checkbox" value="<%=item.s_id%>"></td>
+                        <td><%=item.s_id%></td>
+                        <td><%=item.s_name%></td>
+                        <td><%=item.s_sex%></td>
+                        <td><%=item.s_birthday.toLocaleDateString()%></td>
+                        <td><%=item.s_nation%></td>
+                        <td><%=item.c_name%></td>
+                        <td><%=item.s_address%></td>
+                        <td>
+                            <a href="editStudent?s_id=<%=item.s_id%>" class="label label-warning">修改</a>
+                            <a href="#" data-sid="<%=item.s_id%>" class="label label-warning btn-delete">删除</a>
+                        </td>
+                    </tr>
+                <%})%>
+            </table>
+        </div>
+        <ul class="pagination pull-right">
+            <%for(var i=1;i<=pageCount;i++){%>
+                <li class=
+                    <%=(i==pageIndex)?"active":""%>
+                ><a href="/StudentInfo/list?s_name=<%=query.s_name%>&s_sex=<%=query.s_sex%>&pageIndex=<%=i%>"><%=i%></a></li>
+            <%}%>
+        </ul>
+    </div>
+</body>
+<script>
+   $(function () {
+       $(".btn-delete").click(function () {
+           var s_id=$(this).attr("data-sid");
+           $.get("delete?s_id="+s_id,function (data) {
+               var jsonObj=JSON.parse(data);
+
+               if(jsonObj.status=="success"){
+                  layer.msg("删除成功")
+                   window.location.reload();
+               }
+               else if(jsonObj.status=="error"){
+                   alert(jsonObj.msg);
+               }
+           });
+           return false;
+       });
+       $("#ckAll").click(function () {
+           $("input[name='ck']").prop("checked",$(this).prop("checked"));
+       });
+       $(".btn-deleteAll").click(function () {
+//           var cks=$("input[name='ck']:checked");
+//           if(cks.length<=0){
+//               layer.msg("请选中你要删除的元素")
+//           }
+//           else{
+//               var arr=[];
+//              $(cks).each(function () {
+//                  arr.push($(this).val());
+//              });
+//              $.post("/StudentInfo/deleteAll",{s_ids:arr.toString()},function (data) {
+//                  if(data.status=="success"){
+//                      layer.attr(data.msg,function () {
+//                          window.location.reload();
+//                      })
+//                  }
+//                  else{
+//                      layer.msg(data.msg);
+//                  }
+//              });
+           var str= $("input[name='ck']:checked").checkedVal();
+           if(str==false){
+               layer.msg("请选择你要删除的元素");
+           }
+           else{
+               layer.confirm("你确定要删除这些数据吗？",{btn:["确定","取消"]},function () {
+                   $.post("/StudentInfo/deleteList",{s_ids:str},function(data){
+                       //var jsonObj=JSON.parse(data);
+                       if(data.status=="success"){
+                           layer.alert(data.msg,function(){
+                               window.location.reload();
+                           });
+
+                       }
+                       else{
+                           layer.msg(data.msg);
+                       }
+                   });
+               })
+
+           }
+   })
+
+   })
+
+</script>
+</html>

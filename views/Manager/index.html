@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>登陆教学管理系统</title>
+    <!--[if lt IE 8]>
+    <script type="text/javascript" src="../../public/bootstrap/html5shiv.min.js"></script>
+    <script type="text/javascript" src="../../public/bootstrap/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../../public/bootstrap/css/bootstrap.min.css" type="text/css">
+    <script src="../../public/bootstrap/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../public/javascripts/common.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../public/layer/layer.js"></script>
+    <style type="text/css">
+        .centerDiv
+        {
+            position: fixed;
+            top: 50px;
+            bottom: 0px;
+            width: 100%;
+        }
+        .centerDiv .left
+        {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            background-color: #EEEEEE;
+            padding:0;
+        }
+        .centerDiv .right
+        {
+            position: absolute;
+            height:100%;
+        }
+        #menuDiv .panel-body
+        {
+            padding: 0px;
+        }
+        #menuDiv .panel-body .list-group
+        {
+            margin-bottom: 0px;
+        }
+        #mainFrame
+        {
+            width:100%;
+            height:100%;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">班级学生信息管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="topNav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">欢迎登陆：
+                        <span class="text-danger"><%=stuInfo.s_name%>0</span>
+                        <span class="badge"></span>
+                    </a></li>
+                    <li><a href="#">修改密码</a></li>
+                    <li><a href="/StudentInfo/logOff">退出登陆</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row centerDiv">
+            <div class="left col-sm-2 hidden-xs">
+                <div class="panel-group" id="menuDiv">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <a href="#studentManager" class="panel-title" data-toggle="collapse" data-parent="#menuDiv">
+                                学生管理
+                                <span class="caret"></span>
+                            </a>
+                        </div>
+                        <div class="collapse panel-collapse" id="studentManager">
+                            <div class="panel-body">
+                                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item"><a href="/StudentInfo/addStudent" target="mainFrame">学生注册</a></li>
+                                    <li class="list-group-item"><a href="/StudentInfo/list" target="mainFrame">学生列表</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <a href="#classManager" class="panel-title" data-toggle="collapse" data-parent="#menuDiv">
+                                班级管理
+                                <span class="caret"></span>
+                            </a>
+                        </div>
+                        <div class="collapse panel-collapse" id="classManager">
+                            <div class="panel-body">
+                                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item"><a href="#">新增班级y</a></li>
+                                    <li class="list-group-item"><a href="#">班级列表</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <a href="#departManager" class="panel-title" data-toggle="collapse" data-parent="#menuDiv">
+                                系别管理
+                                <span class="caret"></span>
+                            </a>
+                        </div>
+                        <div class="collapse panel-collapse" id="departManager">
+                            <div class="panel-body">
+                                <ul class="list-group list-unstyled">
+                                    <li class="list-group-item"><a href="#">新增系别</a></li>
+                                    <li class="list-group-item"><a href="#">系别列表</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right col-sm-10 col-xs-12 col-sm-offset-2">
+                <iframe onreadystatechange="readystateChangeIE(this)" onload="readystateChangeWebKit()" src="http://www.qq.com" frameborder="0" id="mainFrame" name="mainFrame"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var layerLoadIndex=null;
+    $(function () {
+       $(".list-group-item>a").click(function () {
+           layerLoadIndex = layer.load({shade:[0.4,"#000"]});
+       });
+    });
+    //针对IE
+    function readystateChangeIE(obj){
+        if(obj.readyState=="complete"){
+            layer.close(layerLoadIndex);
+        }
+    }
+    //针对非IE
+    function readystateChangeWebKit() {
+        layer.close(layerLoadIndex);
+    }
+</script>
+</html>

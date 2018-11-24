@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>登陆学生信息管理系统</title>
+    <!--[if lt IE 8]>
+    <script type="text/javascript" src="../../public/bootstrap/html5shiv.min.js"></script>
+    <script type="text/javascript" src="../../public/bootstrap/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../../public/bootstrap/css/bootstrap.min.css" type="text/css">
+    <script src="../../public/bootstrap/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../public/layer/layer.js"></script>
+    <script type="text/javascript" src="../../public/javascripts/common.js"></script>
+    <style type="text/css">
+        body{
+            background-image: url(../../public/images/LoginBackground.jpg);
+            background-attachment: fixed;
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+
+        }
+        .loginBox
+        {
+            width:350px;
+            height:270px;
+            box-shadow: 1px 1px 5px white inset;
+            position:fixed;
+            left:50%;
+            top:50%;
+            border-radius: 10px;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            box-sizing: border-box;
+            padding:0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loginBox">
+        <div class="page-header">
+            <h3 class="text-center" style="color: white;">登陆教学管理系统</h3>
+        </div>
+        <form id="formLogin" role="form" action="checkLogin" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                    <input type="text" class="form-control" id="s_id" name="s_id" placeholder="请输入学号">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                    </span>
+                    <input type="password" id="s_pwd" name="s_pwd" class="form-control" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <button id="btnLogin" type="button" class="btn btn-warning btn-block btn-load-submit" data-formId="#formLogin">登陆</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
